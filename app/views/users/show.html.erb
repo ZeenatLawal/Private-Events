@@ -1,5 +1,19 @@
-<%= @event.each do |event| %>
-<%= puts event.location %>
-<% end %>
+<% @event.each do |event| %>
+<p>
+  <strong>Name:</strong>
+  <%= event.name %>
+</p>
 
-<%= link_to 'Sign out', destroy_user_session_path, :method => :delete %>
+<p>
+  <strong>Date:</strong>
+  <%= event.date %>
+</p>
+
+<p>
+  <strong>Location:</strong>
+  <%= event.location %>
+</p>
+
+<%= link_to 'Edit', edit_event_path(@event) %> |
+<%= link_to 'Back', events_path %>
+<% end %>
