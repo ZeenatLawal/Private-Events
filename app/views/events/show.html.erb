@@ -12,6 +12,10 @@
   <strong>Location:</strong>
   <%= @event.location %>
 </p>
+ <%= button_to 'Attend', {:controller => "attended_events", :action => "create", :event_id => @event.id, :user_id=> current_user} , :method=>:post  %>
+           <% @event.attendees.each do |user| %>
+           <%= user.email %>
+           <% end %>
 
 <%= link_to 'Edit', edit_event_path(@event) %> |
 <%= link_to 'Back', events_path %>
