@@ -7,8 +7,14 @@ class AttendedEventsController < ApplicationController
   def create
     event = Event.find(params[:event_id])
     @attended_event = AttendedEvent.new(event_id: event.id, user_id: current_user.id)
-    if @attended_event.save
-      redirect_back(fallback_location: root_path)
+    if AttendedEvent.where(user_id: current_user.id, event_id: params[:event_id]).exists? 
+      redirect_to event_path(event) 
+      return 
     end
+    if event.user_id == current_user.id
+      redirect_to event_path(event) 
+      return 
+    end 
+    redirect_back(fallback_location: root_path) if @attended_event.save
   end
 end
