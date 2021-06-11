@@ -20,20 +20,42 @@
 <%= link_to 'Back', events_path %>
 <% end %>
 
-<h1> Attended events </h1>
+<h1> Future events </h1>
 <% current_user.events.each do |attend| %>
-<p>
-  <strong>Name:</strong>
-  <%= attend.name %>
-</p>
+  <% if attend.date >= Date.today %>
+    <p>
+      <strong>Name:</strong>
+      <%= attend.name %>
+    </p>
 
-<p>
-  <strong>Date:</strong>
-  <%= attend.date %>
-</p>
+    <p>
+      <strong>Date:</strong>
+      <%= attend.date %>
+    </p>
 
-<p>
-  <strong>Location:</strong>
-  <%= attend.location %>
-</p>
+    <p>
+      <strong>Location:</strong>
+      <%= attend.location %>
+    </p>
+  <% end %>
+<% end %>
+
+<h1> Past events </h1>
+<% current_user.events.each do |attend| %>
+  <% if attend.date < Date.today %>
+    <p>
+      <strong>Name:</strong>
+      <%= attend.name %>
+    </p>
+
+    <p>
+      <strong>Date:</strong>
+      <%= attend.date %>
+    </p>
+
+    <p>
+      <strong>Location:</strong>
+      <%= attend.location %>
+    </p>
+  <% end %>
 <% end %>
