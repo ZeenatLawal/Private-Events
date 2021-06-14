@@ -38,35 +38,35 @@ class EventsController < ApplicationController
 
   # PATCH/PUT /events/1 or /events/1.json
   def update
-    unless @event.user_id == current_user.id
-      flash[:alert] = "You are not allowed to edit this event!!!!"
-      render :show
-    else
-    respond_to do |format|
-      if @event.update(event_params)
-        format.html { redirect_to @event, notice: 'Event was successfully updated.' }
-        format.json { render :show, status: :ok, location: @event }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @event.errors, status: :unprocessable_entity }
+    if @event.user_id == current_user.id
+      respond_to do |format|
+        if @event.update(event_params)
+          format.html { redirect_to @event, notice: 'Event was successfully updated.' }
+          format.json { render :show, status: :ok, location: @event }
+        else
+          format.html { render :edit, status: :unprocessable_entity }
+          format.json { render json: @event.errors, status: :unprocessable_entity }
+        end
       end
+    else
+      flash[:alert] = 'You are not allowed to edit this event!!!!'
+      render :show
     end
-  end
   end
 
   # DELETE /events/1 or /events/1.json
   def destroy
-    unless @event.user_id == current_user.id
-      flash[:alert] = "You are not allowed to edit this event!!!!"
-      render :show
+    if @event.user_id == current_user.id
+      @event.destroy
+      respond_to do |format|
+        format.html { redirect_to events_url, notice: 'Event was successfully destroyed.' }
+        format.json { head :no_content }
+      end
     else
-    @event.destroy
-    respond_to do |format|
-      format.html { redirect_to events_url, notice: 'Event was successfully destroyed.' }
-      format.json { head :no_content }
+      flash[:alert] = 'You are not allowed to edit this event!!!!'
+      render :show
     end
   end
-end
 
   private
 
