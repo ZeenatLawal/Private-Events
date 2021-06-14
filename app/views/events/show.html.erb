@@ -1,0 +1,29 @@
+<p>
+  <strong>Name:</strong>
+  <%= @event.name %>
+</p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @event.date %>
+</p>
+
+<p>
+  <strong>Location:</strong>
+  <%= @event.location %>
+</p>
+ <%= button_to 'Attend', {:controller => "attended_events", :action => "create", :event_id => @event.id, :user_id=> current_user} , :method=>:post  %>
+           <h4>Attendees</h4>
+           <ul>
+            <% @event.attendees.each do |user| %>
+            <li>
+            <%= user.email %>
+            </li>
+            <% end %>
+           </ul>
+<% if user_signed_in? %>
+<%= link_to 'Edit', edit_event_path(@event) %> |
+<%= link_to 'Destroy', @event, method: :delete, data: { confirm: 'Are you sure?' } %>
+<% end %>
+<%= link_to 'Back', events_path %>
+
