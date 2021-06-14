@@ -13,11 +13,17 @@
   <%= @event.location %>
 </p>
  <%= button_to 'Attend', {:controller => "attended_events", :action => "create", :event_id => @event.id, :user_id=> current_user} , :method=>:post  %>
-           <% @event.attendees.each do |user| %>
-           <%= user.email %>
-           <% end %>
-
+           <h4>Attendees</h4>
+           <ul>
+            <% @event.attendees.each do |user| %>
+            <li>
+            <%= user.email %>
+            </li>
+            <% end %>
+           </ul>
+<% if user_signed_in? %>
 <%= link_to 'Edit', edit_event_path(@event) %> |
-<%= link_to 'Destroy', @event, method: :delete, data: { confirm: 'Are you sure?' } %> |
+<%= link_to 'Destroy', @event, method: :delete, data: { confirm: 'Are you sure?' } %>
+<% end %>
 <%= link_to 'Back', events_path %>
 
