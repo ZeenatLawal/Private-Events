@@ -2,7 +2,8 @@ class UsersController < ApplicationController
   before_action :authenticate_user!, except: [:sign_in]
 
   def show
-    @event = Event.where('user_id = ?', current_user)
-    # @attended = AttendedEvent.where('user_id = ?', current_user.id)
+    @created_events = current_user.events
+    @previous_events = current_user.events.previous
+    @upcoming_events = current_user.events.upcoming
   end
 end
