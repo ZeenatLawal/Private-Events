@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   has_many :events
   has_many :attended_events
-  has_many :events, through: :attended_events
+  has_many :attendances, through: :attended_events, source: :event
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable

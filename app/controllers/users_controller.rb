@@ -3,7 +3,7 @@ class UsersController < ApplicationController
 
   def show
     @created_events = current_user.events
-    @previous_events = current_user.events.previous
-    @upcoming_events = current_user.events.upcoming
+    @upcoming_events = current_user.attendances.upcoming
+    @previous_events = current_user.attendances.previous
   end
 end
