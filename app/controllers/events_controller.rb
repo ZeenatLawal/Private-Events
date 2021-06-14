@@ -38,6 +38,10 @@ class EventsController < ApplicationController
 
   # PATCH/PUT /events/1 or /events/1.json
   def update
+    unless @event.user_id == current_user.id
+      flash[:alert] = "You are not allowed to edit this event!!!!"
+      render :show
+    else
     respond_to do |format|
       if @event.update(event_params)
         format.html { redirect_to @event, notice: 'Event was successfully updated.' }
@@ -48,15 +52,21 @@ class EventsController < ApplicationController
       end
     end
   end
+  end
 
   # DELETE /events/1 or /events/1.json
   def destroy
+    unless @event.user_id == current_user.id
+      flash[:alert] = "You are not allowed to edit this event!!!!"
+      render :show
+    else
     @event.destroy
     respond_to do |format|
       format.html { redirect_to events_url, notice: 'Event was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
+end
 
   private
 
